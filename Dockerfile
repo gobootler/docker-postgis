@@ -17,14 +17,8 @@ RUN apt -y update; apt install -y postgresql-client-9.6 postgresql-common postgr
 EXPOSE 5432
 
 # We will run any commands in this when the container starts
-ADD env-data.sh /
-ADD docker-entrypoint.sh /
-ADD setup-conf.sh /
-ADD setup-database.sh /
-ADD setup-pg_hba.sh /
-ADD setup-replication.sh /
-ADD setup-ssl.sh /
-ADD setup-user.sh /
-RUN chmod +x /*.sh
+ADD start-postgis.sh /start-postgis.sh
+RUN chmod 0777 /start-postgis.sh
+WORKDIR /snapshot
 
-ENTRYPOINT /docker-entrypoint.sh
+CMD /start-postgis.sh
